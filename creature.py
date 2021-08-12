@@ -26,7 +26,7 @@ class Creature:
 
         # mutate
         numberOfMutations = int(length*mutationPercentage)
-        mutationIndexes = random.sample(range(0, length-1), numberOfMutations)
+        mutationIndexes = random.sample(range(length), numberOfMutations)
         for index in mutationIndexes:
             childChromosome0[index] = int(not childChromosome0[index])
             childChromosome1[index] = int(not childChromosome1[index])
