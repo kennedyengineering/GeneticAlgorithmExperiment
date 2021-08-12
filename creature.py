@@ -1,12 +1,12 @@
 # part of genetic algorithm test
 import random
 
- class Creature:
-     def __init__(self, chromosome: list[bool]):
+class Creature:
+    def __init__(self, chromosome):
         # array
         self.chromosome = chromosome
 
-     def mate(self, otherCreature: Creature, mutationPercentage: float) -> list[Creature]:
+    def mate(self, otherCreature, mutationPercentage: float):
         # check for equal length
         if len(self.chromosome) != len(otherCreature.chromosome):
             return None
@@ -19,11 +19,13 @@ import random
         length = len(self.chromosome)
         splitIndex = random.randint(0, length-1)
 
-        childChromosome0 = self.chromosome[0:splitIndex].extend(otherCreature.chromosome[splitIndex:])
-        childChromosome1 = otherCreature.chromosome[0:splitIndex].extend(this.chromosome[splitIndex:])
+        childChromosome0 = self.chromosome[0:splitIndex]
+        childChromosome0.extend(otherCreature.chromosome[splitIndex:])
+        childChromosome1 = otherCreature.chromosome[0:splitIndex]
+        childChromosome1.extend(self.chromosome[splitIndex:])
 
         # mutate
-        numberOfMutations = length*mutationPercentage
+        numberOfMutations = int(length*mutationPercentage)
         mutationIndexes = random.sample(range(0, length-1), numberOfMutations)
         for index in mutationIndexes:
             childChromosome0[index] = not childChromosome0[index]
