@@ -1,15 +1,32 @@
-import random
-from creature import Creature
+from creature_util import generateRandomPopulation
+from creature_util import generateChildGeneration
 
-def generateRandomChromosome(length: int):
-    zeroCount = random.randint(0, length)
-    oneCount = length - zeroCount
+def fitness(creature):
+    answer = [1,1,1,1,0,0,0]
+    wrong = 0
+    for i in range(len(answer)):
+        if answer[i] != creature.chromosome[i]:
+            wrong += 1
+    return len(answer) - wrong
 
-    chromosome = [0]*zeroCount + [1]*oneCount
-    random.shuffle(chromosome)
-    return chromosome
+generationNumber = 0
+generation = generateRandomPopulation(10, 7)
 
-parent1 = Creature([1]*5)
-parent0 = Creature([0]*5)
+# evolution variables
+generation.sort(key=fitness, reverse=True)
+fitnessVal = fitness(generation[0])
 
-[child0, child1] = parent0.mate(parent1, 0.1)
+goal = 7
+topPercentageBreeding = 0.4
+mutationRate = 0.2
+
+while fitnessVal < goal:
+    generation = generateChildGeneration(fitness, generation, topPercentageBreeding, mutationRate)
+    generationNumber += 1
+
+    generation.sort(key=fitness, reverse=True)
+    fitnessVal = fitness(generation[0])
+
+    print("Generation: ", generationNumber, " with fitness: ", fitnessVal, " and chromosome: ", generation[0].chromosome)
+
+print("Done! Found Chromosome: ", generation[0].chromosome)

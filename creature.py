@@ -28,7 +28,7 @@ class Creature:
         numberOfMutations = int(length*mutationPercentage)
         mutationIndexes = random.sample(range(0, length-1), numberOfMutations)
         for index in mutationIndexes:
-            childChromosome0[index] = not childChromosome0[index]
-            childChromosome1[index] = not childChromosome1[index]
+            childChromosome0[index] = int(not childChromosome0[index])
+            childChromosome1[index] = int(not childChromosome1[index])
 
         return [Creature(childChromosome0), Creature(childChromosome1)]
